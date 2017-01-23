@@ -47,6 +47,12 @@ functions:
       - http:
          path: pascoa/ranking
          method: post
+  getRanking:
+    handler: handler.getRanking
+    events:
+      - http:
+         path: pascoa/ranking
+         method: get
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events

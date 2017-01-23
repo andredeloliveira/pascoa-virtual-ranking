@@ -20,10 +20,12 @@ module.exports.hello = (event, context, callback) => {
 
 module.exports.addToRanking = (event, context, callback) => {
   var docClient = new AWS.DynamoDB.DocumentClient();
+  var params = JSON.parse(event.body)
   var Item = {
     id: uuid.v4(),
-    user: event.email,
-    time: event.time,
+    user: params.user,
+    name: params.name,
+    time: params.time,
   };
 
   docClient.put({ TableName: 'pascoa-ranking', Item: Item}, (error) => {
@@ -38,4 +40,24 @@ module.exports.addToRanking = (event, context, callback) => {
       body: "Information saved successfully with " + JSON.stringify(event)
     })
   })
+};
+
+module.exports.getRanking = (event, context, callback) => {
+  var docClient = new AWS.DynamoDB.DocumentClient();
+  var params = {
+    TableName: 'pascoa-ranking',
+    Limit: 5,
+  }
+  docClient.scan(params, (error, data) => {
+    if (error) {
+      callback(error);
+    }
+    callback(null, {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin':'*'
+      },
+      body: JSON.stringify(data),
+    });
+  });
 }
