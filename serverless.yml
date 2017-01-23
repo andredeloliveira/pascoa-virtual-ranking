@@ -41,6 +41,12 @@ functions:
       - http:
          path: pascoa/hellow
          method: get
+  addToRanking:
+    handler: handler.addToRanking
+    events:
+      - http:
+         path: pascoa/ranking
+         method: post
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
