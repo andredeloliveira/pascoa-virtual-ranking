@@ -3,6 +3,9 @@
 # dependencies
 node_modules
 
+#generated bundle
+.serverless
+
 # testing
 coverage
 
