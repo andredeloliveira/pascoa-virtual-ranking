@@ -81,7 +81,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/pascoa-virtual/dev/1485208224458-2017-01-23T21:50:24.458Z/pascoa-virtual.zip"
+          "S3Key": "serverless/pascoa-virtual/dev/1485366190770-2017-01-25T17:43:10.770Z/pascoa-virtual.zip"
         },
         "FunctionName": "pascoa-virtual-dev-hello",
         "Handler": "handler.hello",
@@ -103,7 +103,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/pascoa-virtual/dev/1485208224458-2017-01-23T21:50:24.458Z/pascoa-virtual.zip"
+          "S3Key": "serverless/pascoa-virtual/dev/1485366190770-2017-01-25T17:43:10.770Z/pascoa-virtual.zip"
         },
         "FunctionName": "pascoa-virtual-dev-addToRanking",
         "Handler": "handler.addToRanking",
@@ -125,7 +125,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/pascoa-virtual/dev/1485208224458-2017-01-23T21:50:24.458Z/pascoa-virtual.zip"
+          "S3Key": "serverless/pascoa-virtual/dev/1485366190770-2017-01-25T17:43:10.770Z/pascoa-virtual.zip"
         },
         "FunctionName": "pascoa-virtual-dev-getRanking",
         "Handler": "handler.getRanking",
@@ -521,7 +521,7 @@
         }
       }
     },
-    "ApiGatewayDeployment1485208224467": {
+    "ApiGatewayDeployment1485366190780": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {

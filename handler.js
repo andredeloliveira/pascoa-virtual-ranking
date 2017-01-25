@@ -2,6 +2,7 @@
 
 var AWS = require('aws-sdk');
 var uuid = require('uuid');
+var _ = require('underscore');
 
 module.exports.hello = (event, context, callback) => {
   const response = {
@@ -46,18 +47,28 @@ module.exports.getRanking = (event, context, callback) => {
   var docClient = new AWS.DynamoDB.DocumentClient();
   var params = {
     TableName: 'pascoa-ranking',
-    Limit: 5,
   }
   docClient.scan(params, (error, data) => {
     if (error) {
       callback(error);
     }
+    //TODO: Query directly from the DB. Though DynamoDB kinda sucks fetching data, so we will have this by now 
+    let orderedData = data.Items.sort( (a, b) => {
+      if (a.time > b.time) {
+        return 1;
+      } else if (a.time < b.time) {
+        return -1;
+      } else {
+        return 0;
+      }
+    })
+    let firstFiveOrdered = _.first(orderedData, 5);
     callback(null, {
       statusCode: 200,
       headers: {
         'Access-Control-Allow-Origin':'*'
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(firstFiveOrdered),
     });
   });
 }
