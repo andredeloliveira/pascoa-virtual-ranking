@@ -1,3 +1,3 @@
 #Pascoa Virtual
 
-Serverless microservice for our amazing marketing campaign 
+Serverless microservice to save some really simple ranking information on a DynamoDB database

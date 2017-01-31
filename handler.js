@@ -1,8 +1,23 @@
-'use strict';
+'use strict'
 
-var AWS = require('aws-sdk');
-var uuid = require('uuid');
-var _ = require('underscore');
+var AWS = require('aws-sdk')
+var uuid = require('uuid')
+var _ = require('underscore')
+var sortedRanking = (data) => {
+  if (data.Items) {
+    let sortedData = data.Items.sort( (a, b) => {
+      if (a.time > b.time) {
+        return 1
+      } else if (a.time < b.time) {
+        return -1
+      } else {
+        return 0
+      }
+    })
+    return sortedData
+  }
+  return []
+}
 
 module.exports.hello = (event, context, callback) => {
   const response = {
@@ -11,23 +26,22 @@ module.exports.hello = (event, context, callback) => {
       message: 'Hello world from our APIS!',
       input: event,
     }),
-  };
+  }
 
-  callback(null, response);
+  callback(null, response)
 
   // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-  // callback(null, { message: 'Go Serverless v1.0! Your function executed successfully!', event });
-};
+  // callback(null, { message: 'Go Serverless v1.0! Your function executed successfully!', event })
+}
 
 module.exports.addToRanking = (event, context, callback) => {
-  var docClient = new AWS.DynamoDB.DocumentClient();
+  var docClient = new AWS.DynamoDB.DocumentClient()
   var params = JSON.parse(event.body)
   var Item = {
-    id: uuid.v4(),
     user: params.user,
     name: params.name,
     time: params.time,
-  };
+  }
 
   docClient.put({ TableName: 'pascoa-ranking', Item: Item}, (error) => {
     if (error) {
@@ -38,37 +52,37 @@ module.exports.addToRanking = (event, context, callback) => {
       headers: {
         'Access-Control-Allow-Origin': '*'
       },
-      body: "Information saved successfully with " + JSON.stringify(event)
+      body: "Information saved successfully with " + JSON.stringify('Created successfully')
     })
   })
-};
+}
 
 module.exports.getRanking = (event, context, callback) => {
-  var docClient = new AWS.DynamoDB.DocumentClient();
+  var docClient = new AWS.DynamoDB.DocumentClient()
   var params = {
     TableName: 'pascoa-ranking',
   }
+
+  console.log('event',event)
+  var queryObject = {
+    user: event.queryStringParameters.user,
+  }
+
+
   docClient.scan(params, (error, data) => {
     if (error) {
-      callback(error);
+      callback(error)
     }
-    //TODO: Query directly from the DB. Though DynamoDB kinda sucks fetching data, so we will have this by now 
-    let orderedData = data.Items.sort( (a, b) => {
-      if (a.time > b.time) {
-        return 1;
-      } else if (a.time < b.time) {
-        return -1;
-      } else {
-        return 0;
-      }
-    })
-    let firstFiveOrdered = _.first(orderedData, 5);
+    //TODO: Query directly from the DB. DynamoDB kinda sucks fetching data, so we will have this for now
+    var sortedArray = sortedRanking(data)
+    var ranking = _.first(sortedArray, 5)
+    var userPosition = _.findIndex(sortedArray, queryObject, true) + 1
     callback(null, {
       statusCode: 200,
       headers: {
         'Access-Control-Allow-Origin':'*'
       },
-      body: JSON.stringify(firstFiveOrdered),
-    });
-  });
+      body: JSON.stringify({ userPosition: userPosition, ranking: ranking }),
+    })
+  })
 }

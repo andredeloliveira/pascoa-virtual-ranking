@@ -30,7 +30,7 @@
     "IamPolicyLambdaExecution": {
       "Type": "AWS::IAM::Policy",
       "Properties": {
-        "PolicyName": "dev-pascoa-virtual-lambda",
+        "PolicyName": "dev-pascoa-virtual-ranking-lambda",
         "PolicyDocument": {
           "Version": "2012-10-17",
           "Statement": [
@@ -57,13 +57,13 @@
       "Properties": {
         "AttributeDefinitions": [
           {
-            "AttributeName": "id",
+            "AttributeName": "user",
             "AttributeType": "S"
           }
         ],
         "KeySchema": [
           {
-            "AttributeName": "id",
+            "AttributeName": "user",
             "KeyType": "HASH"
           }
         ],

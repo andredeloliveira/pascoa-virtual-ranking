@@ -30,7 +30,7 @@
     "IamPolicyLambdaExecution": {
       "Type": "AWS::IAM::Policy",
       "Properties": {
-        "PolicyName": "dev-pascoa-virtual-lambda",
+        "PolicyName": "dev-pascoa-virtual-ranking-lambda",
         "PolicyDocument": {
           "Version": "2012-10-17",
           "Statement": [
@@ -57,13 +57,13 @@
       "Properties": {
         "AttributeDefinitions": [
           {
-            "AttributeName": "id",
+            "AttributeName": "user",
             "AttributeType": "S"
           }
         ],
         "KeySchema": [
           {
-            "AttributeName": "id",
+            "AttributeName": "user",
             "KeyType": "HASH"
           }
         ],
@@ -81,9 +81,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/pascoa-virtual/dev/1485366190770-2017-01-25T17:43:10.770Z/pascoa-virtual.zip"
+          "S3Key": "serverless/pascoa-virtual-ranking/dev/1485887659336-2017-01-31T18:34:19.336Z/pascoa-virtual-ranking.zip"
         },
-        "FunctionName": "pascoa-virtual-dev-hello",
+        "FunctionName": "pascoa-virtual-ranking-dev-hello",
         "Handler": "handler.hello",
         "MemorySize": 1024,
         "Role": {
@@ -103,9 +103,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/pascoa-virtual/dev/1485366190770-2017-01-25T17:43:10.770Z/pascoa-virtual.zip"
+          "S3Key": "serverless/pascoa-virtual-ranking/dev/1485887659336-2017-01-31T18:34:19.336Z/pascoa-virtual-ranking.zip"
         },
-        "FunctionName": "pascoa-virtual-dev-addToRanking",
+        "FunctionName": "pascoa-virtual-ranking-dev-addToRanking",
         "Handler": "handler.addToRanking",
         "MemorySize": 1024,
         "Role": {
@@ -125,9 +125,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/pascoa-virtual/dev/1485366190770-2017-01-25T17:43:10.770Z/pascoa-virtual.zip"
+          "S3Key": "serverless/pascoa-virtual-ranking/dev/1485887659336-2017-01-31T18:34:19.336Z/pascoa-virtual-ranking.zip"
         },
-        "FunctionName": "pascoa-virtual-dev-getRanking",
+        "FunctionName": "pascoa-virtual-ranking-dev-getRanking",
         "Handler": "handler.getRanking",
         "MemorySize": 1024,
         "Role": {
@@ -143,7 +143,7 @@
     "ApiGatewayRestApi": {
       "Type": "AWS::ApiGateway::RestApi",
       "Properties": {
-        "Name": "dev-pascoa-virtual"
+        "Name": "dev-pascoa-virtual-ranking"
       }
     },
     "ApiGatewayResourcePascoaHellow": {
@@ -521,7 +521,7 @@
         }
       }
     },
-    "ApiGatewayDeployment1485366190780": {
+    "ApiGatewayDeployment1485887659344": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
