@@ -38,12 +38,52 @@ module.exports.addToRanking = (event, context, callback) => {
   var docClient = new AWS.DynamoDB.DocumentClient()
   var params = JSON.parse(event.body)
   var Item = {
-    user: params.user,
-    name: params.name,
+    email: params.email,
+    firstName: params.firstName,
     time: params.time,
   }
 
-  docClient.put({ TableName: 'pascoa-ranking', Item: Item}, (error) => {
+  //TODO: Research about when using an external lambda function is better than doing this.
+  docClient.scan({
+    TableName: 'pascoa-virtual-ranking',
+    ProjectionExpression: 'email',
+    FilterExpression: 'email = :newEmail',
+    ExpressionAttributeValues: {
+         ":newEmail": Item.email,
+    }
+  }, (error, data) => {
+    if (error) {
+      callback(error)
+    } else {
+      if (data) {
+        //perform update
+        docClient.update({
+          TableName: 'pascoa-virtual-ranking',
+          Key: {
+            'email': Item.email,
+          },
+          UpdateExpression: 'set time = :time',
+          ExpressionAttributeValues: {
+            ':time': Item.time
+          },
+          ReturnValues: 'UPDATED_NEW'
+        }, (error, data) => {
+          if (error) {
+            callback(error)
+          } else {
+            callback(null, {
+              statusCode: 200,
+              headers: {
+                'Access-Control-Allow-Origin': '*'
+              },
+              body: "Updated " + JSON.stringify(data)
+            })
+          }
+        })
+      }
+    }
+  })
+  docClient.put({ TableName: 'pascoa-virtual-ranking', Item: Item}, (error) => {
     if (error) {
       callback(error)
     }
@@ -52,7 +92,7 @@ module.exports.addToRanking = (event, context, callback) => {
       headers: {
         'Access-Control-Allow-Origin': '*'
       },
-      body: "Information saved successfully with " + JSON.stringify('Created successfully')
+      body: "Information saved successfully with " + JSON.stringify(event.body)
     })
   })
 }
@@ -60,14 +100,15 @@ module.exports.addToRanking = (event, context, callback) => {
 module.exports.getRanking = (event, context, callback) => {
   var docClient = new AWS.DynamoDB.DocumentClient()
   var params = {
-    TableName: 'pascoa-ranking',
+    TableName: 'pascoa-virtual-ranking',
   }
 
-  console.log('event',event)
-  var queryObject = {
-    user: event.queryStringParameters.user,
+  var queryObject = null;
+  if (event.queryStringParameters) {
+    queryObject = {
+      email: event.queryStringParameters.email,
+    }
   }
-
 
   docClient.scan(params, (error, data) => {
     if (error) {
@@ -76,7 +117,7 @@ module.exports.getRanking = (event, context, callback) => {
     //TODO: Query directly from the DB. DynamoDB kinda sucks fetching data, so we will have this for now
     var sortedArray = sortedRanking(data)
     var ranking = _.first(sortedArray, 5)
-    var userPosition = _.findIndex(sortedArray, queryObject, true) + 1
+    var userPosition = queryObject ? _.findIndex(sortedArray, queryObject, true) + 1 : -1
     callback(null, {
       statusCode: 200,
       headers: {

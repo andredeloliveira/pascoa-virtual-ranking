@@ -26,7 +26,7 @@ iamRoleStatements:
     - Effect: "Allow"
       Action:
         - "dynamodb:*"
-      Resource: "arn:aws:dynamodb:*:*:table/pascoa-ranking"
+      Resource: "arn:aws:dynamodb:*:*:table/pascoa-virtual-ranking"
 
 # you can add packaging information here
 #package:
@@ -74,16 +74,16 @@ resources:
       Properties:
         AttributeDefinitions:
           -
-            AttributeName: user
+            AttributeName: email
             AttributeType: S
         KeySchema:
           -
-            AttributeName: user
+            AttributeName: email
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-        TableName: pascoa-ranking
+        TableName: pascoa-virtual-ranking
 #  Outputs:
 #     NewOutput:
 #       Description: "Description for the output"

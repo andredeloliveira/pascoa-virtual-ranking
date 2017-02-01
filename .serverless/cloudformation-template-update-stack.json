@@ -57,13 +57,13 @@
       "Properties": {
         "AttributeDefinitions": [
           {
-            "AttributeName": "user",
+            "AttributeName": "email",
             "AttributeType": "S"
           }
         ],
         "KeySchema": [
           {
-            "AttributeName": "user",
+            "AttributeName": "email",
             "KeyType": "HASH"
           }
         ],
@@ -71,7 +71,7 @@
           "ReadCapacityUnits": 1,
           "WriteCapacityUnits": 1
         },
-        "TableName": "pascoa-ranking"
+        "TableName": "pascoa-virtual-ranking"
       }
     },
     "HelloLambdaFunction": {
@@ -81,7 +81,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/pascoa-virtual-ranking/dev/1485887659336-2017-01-31T18:34:19.336Z/pascoa-virtual-ranking.zip"
+          "S3Key": "serverless/pascoa-virtual-ranking/dev/1485918984305-2017-02-01T03:16:24.305Z/pascoa-virtual-ranking.zip"
         },
         "FunctionName": "pascoa-virtual-ranking-dev-hello",
         "Handler": "handler.hello",
@@ -103,7 +103,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/pascoa-virtual-ranking/dev/1485887659336-2017-01-31T18:34:19.336Z/pascoa-virtual-ranking.zip"
+          "S3Key": "serverless/pascoa-virtual-ranking/dev/1485918984305-2017-02-01T03:16:24.305Z/pascoa-virtual-ranking.zip"
         },
         "FunctionName": "pascoa-virtual-ranking-dev-addToRanking",
         "Handler": "handler.addToRanking",
@@ -125,7 +125,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/pascoa-virtual-ranking/dev/1485887659336-2017-01-31T18:34:19.336Z/pascoa-virtual-ranking.zip"
+          "S3Key": "serverless/pascoa-virtual-ranking/dev/1485918984305-2017-02-01T03:16:24.305Z/pascoa-virtual-ranking.zip"
         },
         "FunctionName": "pascoa-virtual-ranking-dev-getRanking",
         "Handler": "handler.getRanking",
@@ -521,7 +521,7 @@
         }
       }
     },
-    "ApiGatewayDeployment1485887659344": {
+    "ApiGatewayDeployment1485918984314": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {

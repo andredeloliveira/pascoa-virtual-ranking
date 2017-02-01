@@ -1,5 +1,5 @@
 {
-  "user": "andre@andre.com",
-  "name":"Andre",
+  "email": "andre@andre.com",
+  "firstName":"Andre",
   "time": "05:05:05"
 }

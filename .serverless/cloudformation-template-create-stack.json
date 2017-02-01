@@ -57,13 +57,13 @@
       "Properties": {
         "AttributeDefinitions": [
           {
-            "AttributeName": "user",
+            "AttributeName": "email",
             "AttributeType": "S"
           }
         ],
         "KeySchema": [
           {
-            "AttributeName": "user",
+            "AttributeName": "email",
             "KeyType": "HASH"
           }
         ],
@@ -71,7 +71,7 @@
           "ReadCapacityUnits": 1,
           "WriteCapacityUnits": 1
         },
-        "TableName": "pascoa-ranking"
+        "TableName": "pascoa-virtual-ranking"
       }
     }
   },
