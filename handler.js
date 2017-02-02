@@ -41,6 +41,7 @@ module.exports.addToRanking = (event, context, callback) => {
     email: params.email,
     firstName: params.firstName,
     time: params.time,
+    shopping: params.shopping,
   }
 
   //TODO: Research about when using an external lambda function is better than doing this.
@@ -102,9 +103,17 @@ module.exports.getRanking = (event, context, callback) => {
   var params = {
     TableName: 'pascoa-virtual-ranking',
   }
+  if (event.queryStringParameters && event.queryStringParameters.shopping) {
+    params.ProjectionExpression = 'email, firstName, time'
+    params.FilterExpression = 'shopping = :requestedShopping'
+    params.ExpressionAttributeValues = {
+         ":requestedShopping": event.queryStringParameters.shopping,
+    }
+  }
+
 
   var queryObject = null;
-  if (event.queryStringParameters) {
+  if (event.queryStringParameters && event.queryStringParameters.email) {
     queryObject = {
       email: event.queryStringParameters.email,
     }
