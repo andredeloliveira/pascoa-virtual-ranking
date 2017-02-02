@@ -104,7 +104,6 @@ module.exports.getRanking = (event, context, callback) => {
     TableName: 'pascoa-virtual-ranking',
   }
   if (event.queryStringParameters && event.queryStringParameters.shopping) {
-    params.ProjectionExpression = 'email, firstName, time'
     params.FilterExpression = 'shopping = :requestedShopping'
     params.ExpressionAttributeValues = {
          ":requestedShopping": event.queryStringParameters.shopping,
